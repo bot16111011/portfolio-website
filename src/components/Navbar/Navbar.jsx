@@ -15,7 +15,7 @@ const Navbar = ()=>{
                 <a href="https://leetcode.com/rajverma9719/" target="_blank"><img src="/leetcode.svg" alt="leetcode"/></a>
                 <a href="https://www.instagram.com/rajarshi1997verma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><img src="/instagram.png" alt="instagram"/></a>
                 <a href="#Contact"><img src="/call.png" alt="contact"/></a>
-                <a href="https://drive.google.com/file/d/1C8Wbk9m1PEouUneUj_qFPv0kXoDCuQ3V/view?usp=sharing">
+                <a href="https://drive.google.com/uc?export=download&id=1C8Wbk9m1PEouUneUj_qFPv0kXoDCuQ3V">
                     <button>Resume <img src="/resume1.png"/></button>
                 </a>       
 
