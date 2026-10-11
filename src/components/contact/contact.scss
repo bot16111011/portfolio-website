@@ -1,93 +1,201 @@
 @import "../../App.scss";
-.contact{
-    height:calc(100vh - 100px);
-    max-width: 1366px;
-    margin:auto;
-    display: flex;
-    align-items: center;
-    gap:50px;
-    @include mobile{
-        width: 100%;
-        padding: 10px;
-        flex-direction: column;
-    }
 
-    .textContainer{
-        flex:1;
+.contact {
+    --contact-gutter: clamp(1rem, 4vw, 4rem);
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    width: min(100%, 1366px);
+    min-height: max(100svh, 36rem);
+    height: auto;
+    margin-inline: auto;
+    padding: clamp(2rem, 7vw, 5rem) var(--contact-gutter);
+    gap: clamp(2rem, 6vw, 5rem);
+    overflow: visible;
+
+    .textContainer {
         display: flex;
         flex-direction: column;
-        gap: 40px;
-        @include mobile{
-            gap: 20px;
-            text-align: center;
-            align-items: center;
-            margin-top: 70px;
+        min-width: 0;
+        gap: clamp(1.5rem, 4vw, 2.5rem);
+
+        h1 {
+            max-width: 12ch;
+            font-size: clamp(2.5rem, 6vw, 5.625rem);
+            line-height: 0.98;
+            overflow-wrap: anywhere;
         }
 
-        h1{
-            font-size: 90px;
-            line-height: 88px;
-            @include mobile{
-                font-size: 30px;
-                line-height: 30px;
+        .item {
+            h2 {
+                margin-bottom: 0.35rem;
+                font-size: clamp(1.1rem, 2vw, 1.5rem);
+                text-transform: capitalize;
             }
-        }
 
-        .item{
-
-            span{
+            a {
+                color: lightgray;
                 font-weight: 300;
-            }
-            span:hover{
-                color:orange;
+                overflow-wrap: anywhere;
+                transition: color 180ms ease;
+
+                &:hover {
+                    color: orange;
+                }
             }
         }
     }
 
-    .formContainer{
-        flex:1;
-        position:relative;
-        @include mobile{
-            width: 100%;
-            padding: 15px;
+    .formContainer {
+        position: relative;
+        min-width: 0;
+
+        .phoneSvg {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: orange;
+            pointer-events: none;
+            opacity: 0.25;
+
+            svg {
+                width: min(100%, 31.25rem);
+                height: auto;
+                stroke: currentColor;
+            }
         }
 
-        .phoneSvg{
-            stroke:orange;
-            position: absolute;
-            margin:auto;
-            right: 50px;
-            z-index: -1;
-        }
-        
-        form{
+        form {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 0.65rem;
 
-            input,textarea{
-                padding: 20px;
+            label {
+                margin-top: 0.35rem;
+                color: lightgray;
+                font-size: 0.95rem;
+                font-weight: 600;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: clamp(0.75rem, 2vw, 1.25rem);
                 border: 2px solid white;
-                background-color: transparent;
+                background-color: rgba(12, 12, 29, 0.8);
                 color: white;
                 border-radius: 5px;
-                @include mobile{
-                    padding: 10px;
+                font: inherit;
+                resize: vertical;
+
+                &:focus-visible {
+                    outline: 3px solid orange;
+                    outline-offset: 3px;
+                    border-color: orange;
                 }
             }
 
-            button{
+            textarea {
+                min-height: 8rem;
+            }
+
+            button {
+                min-height: 2.75rem;
+                margin-top: 0.5rem;
+                padding: 0.85rem 1.25rem;
                 background-color: orange;
                 color: black;
-                padding: 20px;
-                border-radius: 8px;
                 border: none;
+                border-radius: 8px;
                 cursor: pointer;
-                font-weight: 500;
-                @include mobile{
-                    padding: 10px;
+                font: inherit;
+                font-weight: 600;
+                transition: background-color 180ms ease, opacity 180ms ease;
+
+                &:hover:not(:disabled) {
+                    background-color: lightgray;
+                }
+
+                &:disabled {
+                    cursor: wait;
+                    opacity: 0.65;
                 }
             }
+
+            .formStatus {
+                min-height: 1.5rem;
+                margin-top: 0.25rem;
+                color: lightgray;
+
+                &.success {
+                    color: #9be28f;
+                }
+
+                &.error {
+                    color: #ffadad;
+                }
+            }
+        }
+    }
+}
+
+.contact a:focus-visible,
+.contact button:focus-visible {
+    outline: 3px solid orange;
+    outline-offset: 4px;
+}
+
+@media (max-width: 1023px) {
+    .contact {
+        grid-template-columns: 1fr;
+        align-items: start;
+        min-height: auto;
+        padding-block: clamp(2rem, 7vw, 4rem);
+
+        .textContainer {
+            align-items: center;
+            text-align: center;
+
+            h1 {
+                max-width: 18ch;
+            }
+        }
+
+        .formContainer {
+            width: min(100%, 42rem);
+            margin-inline: auto;
+        }
+    }
+}
+
+@media (max-width: 639px) {
+    .contact {
+        padding-inline: 0.75rem;
+        gap: 2rem;
+
+        .textContainer {
+            gap: 1.25rem;
+
+            h1 {
+                font-size: clamp(2.25rem, 11vw, 3rem);
+            }
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact {
+        .textContainer .item a,
+        form button {
+            transition: none;
+        }
+
+        .phoneSvg {
+            display: none;
         }
     }
 }

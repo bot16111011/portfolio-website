@@ -1,18 +1,29 @@
 @import "../../App.scss";
+:root {
+    --z-content: 0;
+    --z-cursor: 50;
+    --z-sticky: 100;
+    --z-nav-panel: 1100;
+    --z-nav-trigger: 1110;
+}
+
 .navbar{
-    height: 100px;
+    min-height: 100px;
+    position: relative;
+    z-index: var(--z-sticky);
 
     .wrapper{
-        max-width: 1366px;
+        width: min(1366px, calc(100% - 40px));
         margin:auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 100%;
+        min-height: 100px;
 
         @include mobile{
             justify-content: flex-end;
             padding: 20px;
+            width: 100%;
         }
 
 
@@ -26,20 +37,40 @@
 
         .social{
             display: flex;
-            gap: 20px;
-            scale:0.8;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 8px;
         
+            a{
+                min-width: 44px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+
+                &:focus-visible{
+                    outline: 2px solid currentColor;
+                    outline-offset: 3px;
+                }
+            }
+
             img{
                 width: 35px;
                 height: 35px;
             }
-            button{
+
+            .resume-link{
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: linear-gradient(90deg,orange,lightgray);
-                padding: 7px;
+                padding: 7px 10px;
                 border-radius: 10px;
+                color: black;
+                text-decoration: none;
+                white-space: nowrap;
 
                 img{
                     margin-right: 5px;
@@ -47,7 +78,8 @@
                     height:20px;
                 }
             }
-            button:hover{
+
+            .resume-link:hover{
                 cursor: pointer;
             }
         }

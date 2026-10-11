@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import "./experience.scss";
-import {motion, useInView} from"framer-motion";
+import {motion, useInView, useReducedMotion} from"framer-motion";
 
 const variants={
     initial:{
@@ -19,40 +19,47 @@ const variants={
     }
 }
 
+const reducedVariants={
+    initial:{opacity:1},
+    animate:{opacity:1}
+}
+
 const Experience=()=>{
 
     const ref = useRef();
-    const isInView = useInView(ref,{margin:"-100px"});
+    const isInView = useInView(ref,{margin:"-10% 0px", once:true});
+    const shouldReduceMotion = useReducedMotion();
+    const animationVariants = shouldReduceMotion ? reducedVariants : variants;
+    const hoverProps = shouldReduceMotion ? undefined : {backgroundColor:"lightgray", color:"#0c0c1d"};
 
     return (
         <motion.div className="experience" 
-        variants={variants} 
+        variants={animationVariants}
         initial="initial" 
-        // whileInView="animate"
         ref={ref}
-        animate={"animate"}
+        animate={isInView ? "animate" : "initial"}
         >
-            <motion.div className="textContainer" variants={variants}><p>
+            <motion.div className="textContainer" variants={animationVariants}><p>
                 I enjoy working on engaging projects that not only provide enjoyment but
-                <br/> also foster continuous learning and skill development.
+                also foster continuous learning and skill development.
                 </p>
                 <hr/>
             </motion.div>
-            <motion.div className="titleContainer" variants={variants}>
+            <motion.div className="titleContainer" variants={animationVariants}>
                 <div className="title">
-                    <img src="/people.webp" alt=""/>
-                    <h1>
+                    <img src="/people.webp" alt="People learning together"/>
+                    <h2>
                         <b>Learning from</b> Experiences
-                    </h1>
+                    </h2>
                 </div>
                 <div className="title">
-                    <h1>
+                    <h2>
                         <b>And still</b> Learning
-                    </h1>
+                    </h2>
                 </div>
             </motion.div>    
-            <motion.div className="listContainer" variants={variants}>
-                <motion.div className="box" id ="infy" whileHover={{background:"lightgray",color:"black", scale:1.05}} variants={variants}>
+            <motion.div className="listContainer" variants={animationVariants}>
+                <motion.article className="box" id ="infy" whileHover={hoverProps} variants={animationVariants}>
                     <motion.h2>INFOSYS</motion.h2>
                     <p id="time">June 2021 - present </p>
                     <h3>Role: Senior Systems Engineer</h3>
@@ -73,8 +80,8 @@ const Experience=()=>{
                         <li>Successfully managed JIRA to Azure migrations, onboarding over 60 teams with 200K+ work items.</li>
                         <li>Learnt various tools for connecting and migrationg data from different TFS like nkd agility, solidify etc.</li>
                     </ul>
-                </motion.div>
-                <motion.div className="box" id="pradan" whileHover={{background:"lightgray",color:"black", scale:1.05}} variants={variants}>
+                </motion.article>
+                <motion.article className="box" id="pradan" whileHover={hoverProps} variants={animationVariants}>
                     <h2>PRADAN (Professional Assistance for Development Action)</h2>
                     <p id="time">Oct 2020 - June 2021 </p>
                     <h3>Role: Development Apprentice</h3>
@@ -83,10 +90,10 @@ const Experience=()=>{
                         <li>Focused on regenerative farming and assisting people in leveraging various government schemes.</li>
                         <li>Gained insights into different cultures, survival in forests, and leading a minimalistic life.</li>
                         <li>Developed strong public speaking skills, addressing audiences of over 200 people, and excelled in problem-solving under stressful conditions.</li>
-                        <li>Successfully recreated a memorable moment from the movie "Swades" involving a water pump, a personal favorite experience.</li>
+                        <li>Successfully recreated a memorable moment from the movie &quot;Swades&quot; involving a water pump, a personal favorite experience.</li>
                     </ul>
-                </motion.div>
-                <motion.div className="box" id="ciab" whileHover={{background:"lightgray",color:"black", scale:1.05}} variants={variants}>
+                </motion.article>
+                <motion.article className="box" id="ciab" whileHover={hoverProps} variants={animationVariants}>
                     <h2>CIAB, Mohali</h2>
                     <p id="time">May 2019 - August 2019 </p>
                     <h3> Project Focus for Internship :</h3>
@@ -97,7 +104,7 @@ const Experience=()=>{
                     <p>Ligated the gene into a vector and transformed it into host E. coli cells through cell shocking.</p>
                     <p>Performed PCR amplification and collected competent cells based on antibiotic resistance.</p>
                     <p>Verified protein expression using SDS-PAGE.</p>
-                </motion.div>
+                </motion.article>
             </motion.div>
         </motion.div>
     )

@@ -1,8 +1,16 @@
 import {motion} from "framer-motion";
-const Closebutton=({setOpen})=>{
+const Closebutton=({open, setOpen, buttonRef})=>{
     return (
-        <button className="btn" onClick={()=>setOpen((prev)=>!prev)}>
-            <motion.svg width="23" height="23" viewBox="0 0 23 23">
+        <button
+            ref={buttonRef}
+            className="btn"
+            type="button"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={open}
+            aria-controls="primary-navigation"
+            onClick={()=>setOpen((prev)=>!prev)}
+        >
+            <motion.svg aria-hidden="true" focusable="false" width="23" height="23" viewBox="0 0 23 23">
                 <motion.path strokeWidth="3" strokeLinecap="round" 
                 variants={{
                     closed:{d:"M 2 2.5 L 20 2.5", stroke: "black"}, 

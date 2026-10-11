@@ -18,19 +18,19 @@ const App = () => {
   }, []);
 
   return <div>
+    <Navbar/>
     <Cursor/>
+    <Homearrow/>
     <section id="Homepage">
-      <Navbar/> 
       <Home/> 
-      <Homearrow/>    
     </section>
-    <section id="Experience"><Parallax type="experience"/><Homearrow/> </section>
-    <section><Experience/><Homearrow/> </section>
-    <section id="Projects"><Parallax type="portfolio"/><Homearrow/> </section>
-    <Portfolio/><Homearrow/> 
-    <section id="About"><Parallax type="about"/><Homearrow/> </section>
-    <section><About/><Homearrow/> </section>
-    <section id="Contact"><Navbar/><Contact/><Homearrow/> </section>
+    <section id="Experience"><Parallax type="experience"/> </section>
+    <section><Experience/> </section>
+    <section id="Projects"><Parallax type="portfolio"/> </section>
+    <Portfolio/>
+    <section id="About"><Parallax type="about"/> </section>
+    <section><About/> </section>
+    <section id="Contact"><Contact/> </section>
 
   </div>;
 };

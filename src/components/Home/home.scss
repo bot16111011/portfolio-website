@@ -1,109 +1,182 @@
 @import "../../App.scss";
 
 .home {
-  height: calc(100vh - 100px);
-  overflow: hidden;
-  background: linear-gradient(180deg, #0c0c1d, #111132);
   position: relative;
+  display: flex;
+  min-height: calc(100svh - var(--header-height));
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  overflow: clip;
+  padding: clamp(2rem, 6vw, 5rem) var(--page-gutter) clamp(4rem, 10vw, 7rem);
+  background: linear-gradient(180deg, #0c0c1d, #111132);
 
   .wrapper {
-    max-width: 1366px;
-    height: 100%;
-    margin: auto;
+    position: relative;
+    z-index: var(--z-content);
+    width: min(100%, var(--content-max-width));
+    margin: 0 auto;
 
     .textcontainer {
-      height: 100%;
-      width: 60%;
+      width: min(100%, 48rem);
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      gap: 40px;
-      z-index: 3;
+      gap: clamp(0.75rem, 2vw, 1.5rem);
+      text-align: center;
 
-      @include mobile {
-        width: 100%;
-        height: auto;
-        padding: 0 20px;
-        text-align: center;
-      }
-
-      h2 {
-        font-size: 30px;
-        letter-spacing: 10px;
+      .eyebrow {
         color: rebeccapurple;
-
-        @include mobile {
-          font-size: 22px;
-        }
+        font-size: clamp(1rem, 2.2vw, 1.875rem);
+        font-weight: 700;
+        letter-spacing: clamp(0.18rem, 1.2vw, 0.625rem);
+        line-height: 1.2;
       }
-      h1 {
-        font-size: 80px;
+
+      h1,
+      .role {
         color: lightgray;
-
-        @include mobile {
-          font-size: 22px !important;
-        }
+        font-size: clamp(2.5rem, 7vw, 5rem);
+        font-weight: 700;
+        line-height: 0.98;
+        overflow-wrap: anywhere;
       }
 
-      #heading {
-        line-height: 50px;
-
-        @include mobile {
-          line-height: 10px !important;
-        }
+      .role {
+        font-size: clamp(1.5rem, 4vw, 3.25rem);
+        font-weight: 400;
+        line-height: 1.05;
       }
-      button {
-        padding: 20px;
+
+      .buttons {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: clamp(0.75rem, 2vw, 1.5rem);
+      }
+
+      .button {
+        min-height: 2.75rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1rem;
         border: 1px solid white;
-        border-radius: 10px;
-        margin: 5px;
-        background-color: transparent;
+        border-radius: 0.625rem;
         color: lightgray;
+        font-size: 0.95rem;
+        text-align: center;
+        transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
       }
-      button:hover {
+
+      .button:hover,
+      .button:focus-visible {
         background-color: lightgray;
         color: black;
-        scale: 1.05;
-        cursor: pointer;
-        font-weight: 300;
+        transform: translateY(-2px);
       }
 
-      img {
-        width: 50px;
+      .scroll-link {
+        display: inline-flex;
+        margin-top: clamp(1rem, 3vw, 2rem);
+        padding: 0.5rem;
+      }
+
+      .scroll-link:focus-visible {
+        outline: 2px solid orange;
+        outline-offset: 0.25rem;
+      }
+
+      .scroll-link img {
+        width: clamp(2rem, 4vw, 3.125rem);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .button {
+          transition: none;
+        }
       }
     }
   }
 
   .imagecontainer {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 180px;
-    z-index: 2;
-
-    @include mobile {
-      height: 50%;
-      width: 100%;
-      top: unset;
-      bottom: 0;
-    }
+    position: relative;
+    z-index: var(--z-content);
+    width: min(100%, 24rem);
+    height: clamp(16rem, 72vw, 30rem);
+    align-self: center;
 
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center bottom;
     }
   }
+
   .slider {
     position: absolute;
-    font-size: 30vh;
-    bottom: -60px;
-    white-space: nowrap;
+    right: 0;
+    bottom: clamp(1rem, 4vw, 3rem);
+    z-index: 0;
+    width: max-content;
+    max-width: none;
     color: #bdbbbb34;
-    opacity: 0.5;
     font-family: bold;
-    width: 50%;
-    z-index: 1;
+    font-size: clamp(4rem, 20vw, 18rem);
+    line-height: 0.8;
+    opacity: 0.5;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 640px) {
+  .home {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(12rem, 0.85fr);
+    align-items: center;
+    column-gap: clamp(1rem, 4vw, 5rem);
+
+    .wrapper {
+      grid-column: 1;
+      grid-row: 1;
+
+      .textcontainer {
+        align-items: flex-start;
+        text-align: left;
+
+        .buttons {
+          justify-content: flex-start;
+        }
+      }
+    }
+
+    .imagecontainer {
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
+      height: min(72svh, 44rem);
+      align-self: end;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .home {
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+
+    .imagecontainer {
+      height: min(78svh, 48rem);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home .slider {
+    transform: none !important;
   }
 }

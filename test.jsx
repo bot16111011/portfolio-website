@@ -1,8 +1,5 @@
-import React,{useState} from 'react';
 import {motion} from "framer-motion";
 const Test=()=>{
-    const [open,setOpen]=useState(false);
-
     const variants={
         visible:{opacity:1,x:100,
             // transition:{type:"spring",stiffness:100,damping:100},

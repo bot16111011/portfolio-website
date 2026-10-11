@@ -1,6 +1,6 @@
 import "./portfolio.scss";
 import { useRef } from "react";
-import {motion, useScroll,useSpring, useTransform} from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 
 const items =[
     {
@@ -32,24 +32,49 @@ const items =[
 
 const Single=({item})=>{
 
-    const ref=useRef();
+    const ref=useRef(null);
+    const shouldReduceMotion = useReducedMotion();
     const {scrollYProgress} = useScroll({target:ref,});
     const y = useTransform(scrollYProgress,[0,1],[-100,100]);
 
+    const playPreview = (event) => {
+        if (shouldReduceMotion || event.pointerType !== "mouse") return;
+
+        event.currentTarget.play().catch(() => {});
+    };
+
+    const pausePreview = (event) => {
+        if (event.pointerType === "mouse") event.currentTarget.pause();
+    };
+
     return (
-        <section>
+        <section aria-labelledby={`project-${item.id}-title`}>
             <div className="container">
                 <div className="wrapper">
                     <motion.div className="imageContainer" ref={ref}>
-                        <video src={item.video} alt="" loop muted
-                            onMouseEnter={event => event.currentTarget.play()}
-                            onMouseLeave={event => event.currentTarget.pause()}                    
+                        <video
+                            src={item.video}
+                            loop
+                            muted
+                            controls
+                            playsInline
+                            preload="metadata"
+                            aria-label={`${item.title} project preview`}
+                            onPointerEnter={playPreview}
+                            onPointerLeave={pausePreview}
                         />
                     </motion.div>
-                    <motion.div className="textContainer" style={{y}}>
-                        <h2>{item.title}</h2>
+                    <motion.div className="textContainer" style={shouldReduceMotion ? undefined : {y}}>
+                        <h2 id={`project-${item.id}-title`}>{item.title}</h2>
                         <p>{item.desc}</p>
-                        <a href="https://github.com/rajarshiverma" target="_blank"><button>Go to Repo</button></a>
+                        <a
+                            className="repoLink"
+                            href="https://github.com/rajarshiverma"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Go to Repo
+                        </a>
                     </motion.div>
                 </div>
             </div>
@@ -60,17 +85,18 @@ const Single=({item})=>{
 
 const Portfolio=()=>{
 
-    const ref=useRef();
+    const ref=useRef(null);
+    const shouldReduceMotion = useReducedMotion();
     const {scrollYProgress} = useScroll({target:ref,offset:["end end","start start"],});
     const scaleX = useSpring(scrollYProgress,{
         stiffness:100,
         damping:30,
     })
     return (
-        <div className="portfolio">
+        <div className="portfolio" ref={ref}>
             <div className="progress">
                 <h1>Featured Works</h1>
-                <motion.div className="progressBar" style={{ scaleX }}></motion.div>
+                <motion.div className="progressBar" style={shouldReduceMotion ? undefined : { scaleX }}></motion.div>
             </div>
             {items.map(item=>(
                 <Single item={item} key={item.id}/>

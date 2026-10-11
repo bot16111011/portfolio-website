@@ -7,13 +7,18 @@
     background-color: white;
     color: black;
     .bg{
-        z-index: 999;
+        z-index: var(--z-nav-panel, 1100);
         position: fixed;
         top: 0;
         left: 0;
         bottom: 0;
-        width: 400px;
+        width: min(400px, 100vw);
         background: white;
+        overscroll-behavior: contain;
+
+        &[aria-hidden="true"]{
+            pointer-events: none;
+        }
 
         @include mobile{
             width:200px;
@@ -33,6 +38,17 @@
 
             a{
                 scale:1.9;
+                min-height: 44px;
+                padding: 8px 16px;
+                display: inline-flex;
+                align-items: center;
+                color: inherit;
+
+                &:focus-visible{
+                    outline: 2px solid currentColor;
+                    outline-offset: 4px;
+                }
+
                 @include mobile{
                     scale:1.5;
                 }
@@ -40,7 +56,7 @@
         }
     }
     .btn{
-        z-index: 999;
+        z-index: var(--z-nav-trigger, 1110);
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -50,6 +66,12 @@
         background-color: transparent;
         border: none;
         cursor:pointer;
+        padding: 10px;
+
+        &:focus-visible{
+            outline: 2px solid currentColor;
+            outline-offset: 4px;
+        }
 
     }
 }

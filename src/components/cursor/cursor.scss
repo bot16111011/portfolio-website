@@ -5,12 +5,20 @@
     border-radius: 50%;
     border: 1px solid white;
     position: fixed;
-    z-index: 999;
+    z-index: var(--z-cursor, 50);
+    pointer-events: none;
+    will-change: transform;
 
     @include mobile{
         display: none;
     }
     @include tablet{
+        display: none;
+    }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce){
+    .cursor{
         display: none;
     }
 }

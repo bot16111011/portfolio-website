@@ -1,113 +1,182 @@
 @import "../../App.scss";
-.portfolio{
+
+.portfolio {
+    --portfolio-gutter: clamp(1rem, 4vw, 4rem);
     position: relative;
-    .progress{
+    min-height: 100%;
+    overflow: visible;
+
+    .progress {
         position: sticky;
         top: 0;
-        left: 0;
-        padding-top: 50px;
+        z-index: 1;
+        width: min(100%, 1366px);
+        margin-inline: auto;
+        padding: clamp(1.25rem, 3vw, 3rem) var(--portfolio-gutter) 0;
+        color: orange;
         text-align: center;
-        color:orange;
-        font-size: 36px;
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
         font-style: italic;
-        @include mobile{
-            padding-top: calc(100vh - 100px);
-            font-size: 24px;
-        }
-        
+        background: linear-gradient(#0c0c1d 75%, transparent);
 
-        .progressBar{
-            height:10px;
+        h1 {
+            font-size: inherit;
+            line-height: 1.2;
+        }
+
+        .progressBar {
+            width: 100%;
+            height: clamp(0.35rem, 0.8vw, 0.625rem);
+            margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
             background-color: white;
             border-radius: 20px;
+            transform-origin: left;
+        }
+    }
+
+    > section {
+        min-height: min(100svh, 56rem);
+        height: auto;
+        padding: clamp(2rem, 7vw, 6rem) var(--portfolio-gutter);
+        scroll-snap-align: start;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: min(100%, 1366px);
+        min-height: 100%;
+        margin-inline: auto;
+        overflow: visible;
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.9fr);
+            align-items: center;
+            width: 100%;
+            gap: clamp(2rem, 5vw, 5rem);
+
+            .imageContainer {
+                width: 100%;
+                aspect-ratio: 16 / 10;
+                min-width: 0;
+
+                video {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 10px;
+                    background: #15152a;
+                }
+            }
+
+            .textContainer {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                min-width: 0;
+                gap: clamp(1rem, 2vw, 1.875rem);
+
+                h2 {
+                    color: lightgray;
+                    font-size: clamp(1.75rem, 4vw, 3.125rem);
+                    line-height: 1.1;
+                }
+
+                p {
+                    max-width: 65ch;
+                    color: gray;
+                    font-size: clamp(1rem, 1.5vw, 1.25rem);
+                    line-height: 1.6;
+                    overflow-wrap: anywhere;
+                }
+
+                .repoLink {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: fit-content;
+                    min-width: 12.5rem;
+                    min-height: 2.75rem;
+                    padding: 0.65rem 1rem;
+                    color: #0c0c1d;
+                    background-color: orange;
+                    border-radius: 10px;
+                    font-weight: 600;
+                    text-align: center;
+                    transition: background-color 180ms ease, transform 180ms ease;
+
+                    &:hover {
+                        background-color: lightgray;
+                        transform: scale(1.05);
+                    }
+                }
+            }
         }
     }
 }
-.container{
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    overflow:hidden;
-    padding-top: 50px;
+.portfolio a:focus-visible,
+.portfolio video:focus-visible {
+    outline: 3px solid orange;
+    outline-offset: 4px;
+}
 
-    .wrapper{
-        max-width:1366px;
-        height:100%;
-        margin:auto;
-        display: flex;
-        gap:50px;
-        align-items: center;
-        justify-content: center;
-        @include mobile{
-            flex-direction: column;
+@media (max-width: 1023px) {
+    .portfolio {
+        > section {
+            min-height: auto;
         }
 
-        .imageContainer{
-            flex:1.5;
-            height: 50%;
-            @include mobile{
-                width: 100%;
-                max-height: 300px;
-            }
+        .container .wrapper {
+            grid-template-columns: 1fr;
 
-            video{
-                width:100%;
-                height:100%;
-                object-fit: cover;
-                border-radius: 10px;
-                @include mobile{
-                    object-fit: contain;
-                }
-            }
-        }
-
-        .textContainer{
-            flex:1;
-            display: flex;
-            flex-direction: column;
-            gap:30px;
-            @include mobile{
-                transform: none !important;
-                padding: 10px;
+            .textContainer {
                 align-items: center;
                 text-align: center;
-            }
 
-            h2{
-                font-size: 50px;
-                color: lightgray;
-                @include mobile{
-                    font-size: 25px;
+                p {
+                    max-width: 70ch;
                 }
             }
+        }
+    }
+}
 
-            p{
-                color: gray;
-                font-size: 20px;
-                @include mobile{
-                    font-size: 12px;
+@media (max-width: 639px) {
+    .portfolio {
+        .progress {
+            padding-top: 1rem;
+        }
+
+        > section {
+            padding-top: 2.5rem;
+        }
+
+        .container .wrapper {
+            gap: 1.5rem;
+
+            .imageContainer {
+                aspect-ratio: 4 / 3;
+            }
+
+            .textContainer {
+                .repoLink {
+                    width: 100%;
                 }
             }
+        }
+    }
+}
 
-            button{
-                background-color: orange;
-                border: none;
-                border-radius: 10px;
-                padding: 10px;
-                width: 200px;
-                cursor: pointer;
-                @include mobile{
-                    flex-direction: column;
-                    align-items: center;
-                }
-            }
-            button:hover{
-                scale:1.05;
-                background-color: lightgray;
-            }
+@media (prefers-reduced-motion: reduce) {
+    .portfolio .repoLink {
+        transition: none;
+
+        &:hover {
+            transform: none;
         }
     }
 }

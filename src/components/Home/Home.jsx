@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import "./home.scss";
-import {motion} from "framer-motion";
+import {motion, useReducedMotion} from "framer-motion";
 
 const textvariants={
     initial:{
@@ -40,51 +39,39 @@ const slidervariants={
 }
 
 const Home=()=>{
-
-    const [imageSrc, setImageSrc] = useState("/my.png");
-
-    // const handleMouseOver = () => {
-    //     if (window.innerWidth >= 1366) {
-    //         setImageSrc("/dab.png");
-    //     }
-    // };
-
-    // const handleMouseOut = () => {
-    //     if (window.innerWidth >= 1366) {
-    //         setImageSrc("/my2.png");
-    //     }
-    // };
+    const shouldReduceMotion = useReducedMotion();
 
     return (
         <div className="home">
             <div className="wrapper">
-                <motion.div className="textcontainer" variants={textvariants} initial="initial" animate="animate">
-                    <motion.h2 variants={textvariants}>RAJARSHI VERMA</motion.h2>
-                    <motion.h1 id="heading" variants={textvariants}> DevOps Engineer  </motion.h1>
-                    <motion.h1 id="heading" variants={textvariants}> Python Developer </motion.h1>
-                    <motion.h1 id="heading" variants={textvariants}> Web Developer </motion.h1>
+                <motion.div
+                    className="textcontainer"
+                    variants={textvariants}
+                    initial={shouldReduceMotion ? false : "initial"}
+                    animate={shouldReduceMotion ? undefined : "animate"}
+                >
+                    <motion.p className="eyebrow" variants={textvariants}>RAJARSHI VERMA</motion.p>
+                    <motion.h1 variants={textvariants}>DevOps Engineer</motion.h1>
+                    <motion.p className="role" variants={textvariants}>Python Developer</motion.p>
+                    <motion.p className="role" variants={textvariants}>Web Developer</motion.p>
                     <motion.div variants={textvariants} className="buttons">
-                        <motion.a  variants={textvariants} href="https://github.com/rajarshiverma" target="_blank">
-                            <motion.button variants={textvariants}>See the Latest Work</motion.button>
+                        <motion.a variants={textvariants} className="button" href="https://github.com/rajarshiverma" target="_blank" rel="noopener noreferrer">
+                            See the Latest Work
                         </motion.a>
-                        <motion.a  variants={textvariants} href="#Contact">
-                            <motion.button variants={textvariants}>Contact Me</motion.button>
+                        <motion.a variants={textvariants} className="button" href="#Contact">
+                            Contact Me
                         </motion.a>
                     </motion.div>
-                    <motion.img variants={textvariants} animate="scrollButton" src="/scroll.png"/>
+                    <motion.a className="scroll-link" variants={textvariants} href="#Experience" aria-label="Scroll to experience">
+                        <motion.img variants={textvariants} animate={shouldReduceMotion ? undefined : "scrollButton"} src="/scroll.png" alt="" />
+                    </motion.a>
                 </motion.div>
             </div>
-            <motion.div className="slider" variants={slidervariants} initial="initial" animate="animate" >
+            <motion.div className="slider" variants={slidervariants} initial="initial" animate={shouldReduceMotion ? undefined : "animate"} aria-hidden="true">
                 Tech enthusiast Trader 
             </motion.div>
             <div className="imagecontainer">
-                <motion.img 
-                    src={imageSrc} 
-                    alt="Author" 
-                    // onMouseOver={handleMouseOver} 
-                    // onMouseOut={handleMouseOut}
-                    // style={imageSrc === "/dab.png" ? { height: "100%",position:"relative",scale:1.07 } : {}}
-                />
+                <img src="/my.png" alt="Rajarshi Verma" />
             </div>
         </div>
     )

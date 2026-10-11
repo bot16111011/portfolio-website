@@ -24,12 +24,20 @@ const variants={
         
     },
 }
-const Links=()=>{
+const Links=({open, onNavigate})=>{
     const items=[
         "Homepage", "Experience", "Projects", "About", "Contact",]   
     return (
         <motion.div className="links" variants={variants}>{items.map(item=>(
-            <motion.a href={`#${item}`} key ={item} variants={itemVariants} whileHover={{scale:1.2}} whileTap={{scale:0.95}}>{item}</motion.a>
+            <motion.a
+                href={`#${item}`}
+                key ={item}
+                variants={itemVariants}
+                whileHover={{scale:1.2}}
+                whileTap={{scale:0.95}}
+                tabIndex={open ? 0 : -1}
+                onClick={onNavigate}
+            >{item}</motion.a>
         ))}</motion.div>
     )
 }

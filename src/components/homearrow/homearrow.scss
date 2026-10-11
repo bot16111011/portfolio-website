@@ -1,12 +1,25 @@
 .homearrow {
-    z-index: 999;
+    z-index: var(--z-sticky, 100);
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 1000;
-    font-size: 2rem;
-    cursor: pointer;
+    width: 48px;
+    height: 48px;
     opacity: 1;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-size: 2rem;
+
+    a{
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: inherit;
+        cursor: pointer;
+
+        &:focus-visible{
+            outline: 2px solid currentColor;
+            outline-offset: 4px;
+        }
+    }
   }
-  
